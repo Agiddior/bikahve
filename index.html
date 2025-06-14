@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>selam bahar sana bir kahve ısmarlayabilir miyim?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+
+    button {
+      padding: 20px 60px;
+      font-size: 24px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: absolute;
+      user-select: none;
+    }
+
+    #yesBtn {
+      background-color: #4caf50;
+      color: white;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      padding: 30px 80px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #4caf50;
+    }
+
+    .disco {
+      animation: discoColor 1s linear infinite;
+      box-shadow:
+        0 0 10px red,
+        0 0 20px orange,
+        0 0 30px yellow,
+        0 0 40px green,
+        0 0 50px blue,
+        0 0 60px indigo,
+        0 0 70px violet;
+    }
+
+    @keyframes discoColor {
+      0% {
+        box-shadow:
+          0 0 10px red,
+          0 0 20px orange,
+          0 0 30px yellow,
+          0 0 40px green,
+          0 0 50px blue,
+          0 0 60px indigo,
+          0 0 70px violet;
+      }
+      50% {
+        box-shadow:
+          0 0 10px violet,
+          0 0 20px indigo,
+          0 0 30px blue,
+          0 0 40px green,
+          0 0 50px yellow,
+          0 0 60px orange,
+          0 0 70px red;
+      }
+      100% {
+        box-shadow:
+          0 0 10px red,
+          0 0 20px orange,
+          0 0 30px yellow,
+          0 0 40px green,
+          0 0 50px blue,
+          0 0 60px indigo,
+          0 0 70px violet;
+      }
+    }
+
+    #noBtn {
+      background-color: #f44336;
+      color: white;
+      left: 50%;
+      top: 68%;
+      transform: translate(-50%, -50%);
+      font-size: 26px;
+      padding: 25px 70px;
+      border-radius: 15px;
+    }
+
+    .emoji {
+      position: fixed;
+      font-size: 24px;
+      pointer-events: none;
+      user-select: none;
+      animation: floatUp 3s ease forwards;
+      opacity: 1;
+      will-change: transform, opacity;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150px);
+        opacity: 0;
+      }
+    }
+
+    /* Ortada büyük mesaj kutusu */
+    #loveMessage {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: #e91e63;
+      font-weight: bold;
+      background: rgba(255, 192, 203, 0.8);
+      padding: 20px 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px #e91e63;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 10000;
+      user-select: none;
+    }
+    #loveMessage.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>selam bahar sana bir kahve ısmarlayabilir miyim?</h1>
+  <button id="yesBtn">olur</button>
+  <button id="noBtn">olmaz</button>
+
+  <div id="loveMessage">doğru karar şimdi dm'e cevap ver seni bekliyorum :)) ❤️</div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const loveMessage = document.getElementById('loveMessage');
+
+    const noMessages = [
+      "Yanlış tıkladın heralde",
+      "Şaka yapma",
+      "bak giderim!"
+    ];
+
+    let clickCount = 0;
+
+    noBtn.addEventListener('click', () => {
+      if (clickCount < noMessages.length) {
+        noBtn.textContent = noMessages[clickCount];
+        clickCount++;
+      } else {
+        noBtn.style.display = 'none';
+      }
+      moveNoButton();
+    });
+
+    function moveNoButton() {
+      const padding = 20;
+      const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+      const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+      const randomX = Math.floor(Math.random() * (maxX - padding)) + padding;
+      const randomY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    }
+
+    const emojis = ['❤️', '💋', '😍', '😘', '💕', '💖', '💞', '💓', '💗', '🌹'];
+
+    function spawnEmoji() {
+      const emoji = document.createElement('div');
+      emoji.classList.add('emoji');
+      emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      emoji.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+      emoji.style.top = Math.random() * (window.innerHeight - 30) + 'px';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 3000);
+    }
+
+    yesBtn.addEventListener('click', () => {
+      if (!yesBtn.classList.contains('disco')) {
+        yesBtn.classList.add('disco');
+      }
+      // 5 tane emoji çıkart
+      for(let i = 0; i < 5; i++) {
+        spawnEmoji();
+      }
+      // Mesaj göster
+      loveMessage.classList.add('show');
+
+      // 3 saniye sonra gizle
+      setTimeout(() => {
+        loveMessage.classList.remove('show');
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
